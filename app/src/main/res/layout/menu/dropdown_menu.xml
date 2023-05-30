@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_item_1"
+        android:title="Bookmarks"
+        android:icon="@drawable/baseline_bookmarks_24"/>
+    <item
+        android:id="@+id/menu_item_2"
+        android:title="About"
+        android:icon="@drawable/baseline_question_mark_24"/>
+</menu>
