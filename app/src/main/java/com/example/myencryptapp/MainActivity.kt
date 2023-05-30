@@ -19,6 +19,7 @@ import android.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import java.util.*
 import android.util.Log
+import java.time.LocalDateTime
 
 import javax.crypto.Cipher
 import android.util.Base64
@@ -33,8 +34,13 @@ import java.security.interfaces.RSAPublicKey
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var getName: EditText
     private lateinit var getMessage: EditText
     private lateinit var saveButton: Button
+    private lateinit var getjcol: EditText
+    private lateinit var getjname: EditText
+    private lateinit var getjtime: EditText
+    private lateinit var getid: EditText
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -47,10 +53,6 @@ class MainActivity : AppCompatActivity() {
                 popupMenu.menuInflater.inflate(R.menu.dropdown_menu, popupMenu.menu)
                 popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
-                        R.id.menu_item_1 -> {
-                            startActivity(Intent(this, DecryptActivity::class.java))
-                            true
-                        }
 
                         R.id.menu_item_2 -> {
                             startActivity(Intent(this, AboutActivity::class.java))
@@ -82,8 +84,13 @@ class MainActivity : AppCompatActivity() {
         toolbar.title = ""
         setSupportActionBar(toolbar)
 
+        getName = findViewById(R.id.namehere)
         getMessage = findViewById(R.id.message)
         saveButton = findViewById(R.id.submitBtn)
+        getjcol = findViewById(R.id.justcol)
+        getjname = findViewById(R.id.justname)
+        getjtime = findViewById(R.id.justtime)
+        getid = findViewById(R.id.idhere)
 
         // Get the root view of the activity
         val rootView = findViewById<View>(android.R.id.content)
@@ -105,6 +112,7 @@ class MainActivity : AppCompatActivity() {
 
         saveButton.setOnClickListener {
             val message = getMessage.text.toString().trim()
+            val name = getName.text.toString().trim()
 
             AsyncTask.execute {
                 // Move network operation to background thread
@@ -140,30 +148,71 @@ class MainActivity : AppCompatActivity() {
                     cipher.init(Cipher.ENCRYPT_MODE, publicKey)
                     val encryptedMessage = cipher.doFinal(message.toByteArray(Charsets.UTF_8))
 
-                    val encryptedMessageBase64 = Base64.encodeToString(encryptedMessage, Base64.DEFAULT)
-
-                    val userMap = hashMapOf(
-                        "message" to encryptedMessageBase64
-                    )
+                    val encryptedMessageBase64 =
+                        Base64.encodeToString(encryptedMessage, Base64.DEFAULT)
 
                     val newCode = Random().nextInt(899999999) + 100000000
 
-                    db.collection("user").document(newCode.toString()).set(userMap)
-                        .addOnSuccessListener {
-                            runOnUiThread {
-                                Toast.makeText(this, "successfully added", Toast.LENGTH_SHORT).show()
-                                getMessage.text.clear()
+                    val userMap = hashMapOf(
+                        "message" to encryptedMessageBase64,
+                        "name" to name
+                    )
+
+                    val currentDateTime = LocalDateTime.now()
+                    val documentId = currentDateTime.toString().replace("T", " ").replace(".", "-")
+
+                    if (getid.text.isNullOrEmpty()) {
+                        // If getid is null or empty, generate a new random 9-digit number
+                        val newCode = Random().nextInt(899999999) + 100000000
+                        db.collection(newCode.toString()).document(documentId).set(userMap)
+                            .addOnSuccessListener {
+                                runOnUiThread {
+                                    Toast.makeText(this, "successfully added", Toast.LENGTH_SHORT)
+                                        .show()
+                                    getMessage.text.clear()
+                                    getName.text.clear()
+                                    getid.text.clear()
+                                    getjname.setText(name)
+                                    getjcol.setText(newCode.toString())
+                                    getjtime.setText(
+                                        currentDateTime.toString().replace("T", " ")
+                                            .replace(".", "-")
+                                    )
+                                }
                             }
-                        }
-                        .addOnFailureListener {
-                            runOnUiThread {
-                                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+                            .addOnFailureListener {
+                                runOnUiThread {
+                                    Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+                                }
                             }
-                        }
+                    } else {
+                        // If getid is not null, use its value as the collection name
+                        val existid = getid.text.toString().trim()
+                        db.collection(existid).document(documentId).set(userMap)
+                            .addOnSuccessListener {
+                                runOnUiThread {
+                                    Toast.makeText(this, "successfully added", Toast.LENGTH_SHORT)
+                                        .show()
+                                    getMessage.text.clear()
+                                    getName.text.clear()
+                                    getjname.setText(name)
+                                    getjcol.setText(existid)
+                                    getjtime.setText(
+                                        currentDateTime.toString().replace("T", " ")
+                                            .replace(".", "-")
+                                    )
+                                }
+                            }
+                            .addOnFailureListener {
+                                runOnUiThread {
+                                    Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                    }
                 }
             }
+
+
         }
-
-
     }
 }

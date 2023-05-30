@@ -7,7 +7,7 @@
         android:id="@+id/toolbar4"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/teal_700"
+        android:background="@color/light_red"
         android:elevation="4dp"
         android:theme="?attr/actionBarTheme" >
 
@@ -163,7 +163,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/teal_700"
+        android:background="@color/light_red"
         android:ems="5"
         android:gravity="center"/>
 

@@ -11,7 +11,7 @@
         android:id="@+id/toolbar1"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/teal_700"
+        android:background="@color/light_red"
         android:elevation="4dp"
         android:theme="?attr/actionBarTheme"
         >
@@ -46,30 +46,86 @@
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="40dp"
-                android:orientation="horizontal">
+        <EditText
+            android:id="@+id/idhere"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:hint="Enter existing id here"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:singleLine="true"
+            android:background="@drawable/border"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/namehere"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:hint="Enter name here *"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:singleLine="true"
+            android:background="@drawable/border"
+            android:layout_gravity="center_horizontal"/>
+
 
             <EditText
                 android:id="@+id/message"
                 android:layout_width="320dp"
-                android:layout_height="match_parent"
-                android:hint="Enter text here"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:hint="Enter link here *"
                 android:paddingLeft="20dp"
-                android:background="@drawable/border"/>
+                android:paddingRight="20dp"
+                android:singleLine="true"
+                android:background="@drawable/border"
+                android:layout_gravity="center_horizontal"/>
 
             <Button
                 android:id="@+id/submitBtn"
-                android:layout_width="match_parent"
+                android:layout_width="320dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="-5dp"
-                android:backgroundTint="@color/teal_200"
-                android:text="Encrypt"
-                android:textSize="11sp" />
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/lighter_red"
+                android:text="Submit"
+                android:textSize="11sp"
+                android:layout_gravity="center_horizontal"/>
 
-            </LinearLayout>
+        <TextView
+            android:id="@+id/justcreated"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:text="Just created: "
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/justcol"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/justname"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/justtime"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 
