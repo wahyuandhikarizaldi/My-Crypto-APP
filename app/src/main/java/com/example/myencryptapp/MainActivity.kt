@@ -195,6 +195,7 @@ class MainActivity : AppCompatActivity() {
                                         .show()
                                     getMessage.text.clear()
                                     getName.text.clear()
+                                    getid.text.clear()
                                     getjname.setText(name)
                                     getjcol.setText(existid)
                                     getjtime.setText(
@@ -211,8 +212,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-
-
         }
     }
 }
